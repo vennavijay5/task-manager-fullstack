@@ -1,0 +1,126 @@
+body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f4f6f9; }
+
+.auth-container {
+  max-width: 400px;
+  margin: 100px auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.1);
+}
+
+.auth-container h2 { text-align: center; color: #1e293b; }
+
+.auth-container input,
+.task-form input,
+.task-form select {
+  width: 100%;
+  padding: .6rem;
+  margin: .4rem 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.auth-container button,
+.task-form button {
+  width: 100%;
+  padding: .7rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: .5rem;
+}
+
+.auth-container button:hover,
+.task-form button:hover { background: #2563eb; }
+
+.dashboard header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background: #1e293b;
+  color: white;
+}
+
+.dashboard header h1 { flex: 1; margin: 0; }
+
+.dashboard header button {
+  padding: .5rem 1rem;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.task-form {
+  display: flex;
+  gap: .5rem;
+  padding: 1rem 2rem;
+  background: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,.1);
+  flex-wrap: wrap;
+}
+
+.task-form input, .task-form select {
+  flex: 1;
+  min-width: 120px;
+  margin: 0;
+}
+
+.task-form button {
+  width: auto;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+}
+
+.task-column {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  min-height: 400px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+
+.task-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: .8rem;
+  margin-bottom: .7rem;
+}
+
+.task-card button {
+  padding: .3rem .6rem;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: .75rem;
+  margin-top: .4rem;
+}
+
+.badge {
+  padding: .2rem .5rem;
+  border-radius: 12px;
+  font-size: .75rem;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.badge.high { background: #fee2e2; color: #dc2626; }
+.badge.medium { background: #fef9c3; color: #ca8a04; }
+.badge.low { background: #dcfce7; color: #16a34a; }
