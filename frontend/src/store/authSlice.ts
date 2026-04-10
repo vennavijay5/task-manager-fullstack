@@ -27,6 +27,17 @@ export const register = createAsyncThunk('auth/register', async (data: { usernam
   return res.data;
 });
 
+const saveAuth = (state: AuthState, payload: any) => {
+  state.token = payload.token;
+  state.username = payload.username;
+  state.role = payload.role;
+  state.loading = false;
+  state.error = null;
+  localStorage.setItem('token', payload.token);
+  localStorage.setItem('username', payload.username);
+  localStorage.setItem('role', payload.role);
+};
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -38,15 +49,12 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.fulfilled, (state, action) => {
-        state.token = action.payload.token;
-        state.username = action.payload.username;
-        state.role = action.payload.role;
-        localStorage.setItem('token', action.payload.token);
-        localStorage.setItem('username', action.payload.username);
-        localStorage.setItem('role', action.payload.role);
-      })
-      .addCase(login.rejected, (state) => { state.error = 'Invalid credentials'; });
+      .addCase(login.pending, (state) => { state.loading = true; state.error = null; })
+      .addCase(login.fulfilled, (state, action) => { saveAuth(state, action.payload); })
+      .addCase(login.rejected, (state) => { state.loading = false; state.error = 'Invalid credentials'; })
+      .addCase(register.pending, (state) => { state.loading = true; state.error = null; })
+      .addCase(register.fulfilled, (state, action) => { saveAuth(state, action.payload); })
+      .addCase(register.rejected, (state) => { state.loading = false; state.error = 'Registration failed'; });
   },
 });
 
