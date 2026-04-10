@@ -4,6 +4,7 @@ import com.taskmanager.entity.User;
 import com.taskmanager.repository.UserRepository;
 import com.taskmanager.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +21,13 @@ public class AuthService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
-    private final AuthenticationManager authenticationManager;
+    private final ApplicationContext applicationContext;
+
+    // Resolved lazily via ApplicationContext to break the circular dependency:
+    // SecurityConfig → AuthService → AuthenticationManager → SecurityConfig
+    private AuthenticationManager getAuthenticationManager() {
+        return applicationContext.getBean(AuthenticationManager.class);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -34,7 +41,7 @@ public class AuthService implements UserDetailsService {
     }
 
     public Map<String, String> login(String username, String password) {
-        authenticationManager.authenticate(
+        getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(username, password));
         String token = jwtUtil.generateToken(username);
         User user = userRepository.findByUsername(username).orElseThrow();
